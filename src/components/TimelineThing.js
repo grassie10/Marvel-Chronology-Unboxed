@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
+import { setData } from '../firebase';
 
 import {
   TimelineItem,
@@ -10,8 +11,15 @@ import {
   TimelineOppositeContent,
 } from '@mui/lab';
 
-const TimelineThing = ({ movie }) => {
-  const [isClicked, setIsClicked] = useState(false);
+const TimelineThing = ({ movie, watchedData, userUID }) => {
+  const [isClicked, setIsClicked] = useState(watchedData[movie.key]);
+
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+    if (userUID !== '') {
+      setData(`users/${userUID}/watched/${movie.key}`, isClicked)
+    }
+  };
 
   return (
     <TimelineItem>
@@ -19,7 +27,7 @@ const TimelineThing = ({ movie }) => {
         <img height='100px' src={movie.url} alt='marvel'></img>
       </TimelineOppositeContent>
       <TimelineSeparator>
-        <div onClick={() => setIsClicked(!isClicked)}>
+        <div onClick={handleClick}>
           <TimelineDot
             color={isClicked ? 'success' : 'primary'}
             variant={isClicked ? 'filled' : 'outline'}

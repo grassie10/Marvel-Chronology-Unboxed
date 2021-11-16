@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { useState, useEffect } from 'react';
-import { getDatabase, onValue, ref } from 'firebase/database';
+import { getDatabase, onValue, ref, set } from 'firebase/database';
 import {
   getAuth,
   GoogleAuthProvider,
@@ -33,6 +33,13 @@ const firebaseSignOut = () => signOut(getAuth(firebase));
 
 export { firebaseSignOut as signOut };
 
+export const getUID = () => {
+  const user = getAuth(firebase).currentUser;
+  if (user !== null) {
+    return user.uid;
+  }
+};
+
 export const useUserState = () => {
   const [user, setUser] = useState();
 
@@ -43,7 +50,10 @@ export const useUserState = () => {
   return [user];
 };
 
+
 // Data functions
+export const setData = (path, value) => set(ref(database, path), value);
+
 export const useData = (path, transform) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
