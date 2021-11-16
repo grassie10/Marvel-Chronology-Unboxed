@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import { getDatabase, onValue, ref } from "firebase/database";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBZYg3LHXvlnoDZAbw1kMW20DvoGg29b-U",
-    authDomain: "marvel-chronology-unboxed.firebaseapp.com",
-    databaseURL: "https://marvel-chronology-unboxed-default-rtdb.firebaseio.com",
-    projectId: "marvel-chronology-unboxed",
-    storageBucket: "marvel-chronology-unboxed.appspot.com",
-    messagingSenderId: "838709761150",
-    appId: "1:838709761150:web:e175ed41cb8a35c977742f",
-    measurementId: "G-V3XJL6ZDYV"
+  apiKey: "AIzaSyBZYg3LHXvlnoDZAbw1kMW20DvoGg29b-U",
+  authDomain: "marvel-chronology-unboxed.firebaseapp.com",
+  databaseURL: "https://marvel-chronology-unboxed-default-rtdb.firebaseio.com",
+  projectId: "marvel-chronology-unboxed",
+  storageBucket: "marvel-chronology-unboxed.appspot.com",
+  messagingSenderId: "838709761150",
+  appId: "1:838709761150:web:e175ed41cb8a35c977742f",
+  measurementId: "G-V3XJL6ZDYV",
 };
 
 // Initialize Firebase
