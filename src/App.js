@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
 import { useData } from "./firebase";
-import Timeline from "./Timeline";
+
+import Timeline from '@mui/lab/Timeline';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineDot from '@mui/lab/TimelineDot';
 
 function App() {
   const [data, loading, error] = useData("/");
@@ -11,13 +17,35 @@ function App() {
   console.log(data[0], "app js data");
   return (
     <div className="App">
-      {data.map((phase) => (
-        <div>{phase.name}</div>
-      ))}
 
-      <Timeline data={data} />
+<Timeline>
+      {data.map((phase) => {
+return (
+        phase['movies'].map((movie) => (
+              <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                
+                {movie.name}
+                
+                </TimelineContent>
+            </TimelineItem> 
+       ) )) } )}
+</Timeline>
+  
+
     </div>
+
+
+
   );
 }
 
 export default App;
+
+
+
+
