@@ -15,10 +15,10 @@ const TimelineThing = ({ movie, watchedData, userUID }) => {
   const [isClicked, setIsClicked] = useState(watchedData[movie.key]);
 
   const handleClick = () => {
-    setIsClicked(!isClicked);
     if (userUID !== '') {
-      setData(`users/${userUID}/watched/${movie.key}`, isClicked)
+      setData(`users/${userUID}/watched/${movie.key}`, !isClicked)
     }
+    setIsClicked(!isClicked);
   };
 
   return (
