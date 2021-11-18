@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import '../App.css';
-import { setData } from '../firebase';
-import { Dialog, DialogTitle, TextField, Button } from '@mui/material';
+import React, { useState } from "react";
+import "../App.css";
+import { setData } from "../firebase";
+import { Dialog, DialogTitle, TextField, Button } from "@mui/material";
 import {
   TimelineItem,
   TimelineSeparator,
@@ -9,16 +9,16 @@ import {
   TimelineContent,
   TimelineDot,
   TimelineOppositeContent,
-} from '@mui/lab';
+} from "@mui/lab";
 
-const TimelineThing = ({ movie, watchedData, userUID }) => {
+const TimelineThing = ({ movie, watchedData, userUID, notesTaken }) => {
   const [isWatched, setIsWatched] = useState(watchedData[movie.key]);
   const [open, setOpen] = useState(false);
-  const [text, setText] = useState("Enter your thoughts here");
+  const [text, setText] = useState(notesTaken[movie.key]);
 
   const toggleMovieWatched = () => {
-    if (userUID !== '') {
-      setData(`users/${userUID}/watched/${movie.key}`, !isWatched)
+    if (userUID !== "") {
+      setData(`users/${userUID}/watched/${movie.key}`, !isWatched);
     }
     setIsWatched(!isWatched);
   };
@@ -27,19 +27,25 @@ const TimelineThing = ({ movie, watchedData, userUID }) => {
     setOpen(!open);
   };
 
+  const handleDataSet = () => {
+    if (userUID !== "") {
+      setData(`users/${userUID}/notes/${movie.key}`, text);
+    }
+  };
+
   return (
     <div>
       <TimelineItem>
         <div onClick={handleDialog}>
           <TimelineOppositeContent>
-            <img height='100px' src={movie.url} alt='marvel'></img>
+            <img height="100px" src={movie.url} alt="marvel"></img>
           </TimelineOppositeContent>
         </div>
         <TimelineSeparator>
           <div onClick={toggleMovieWatched}>
             <TimelineDot
-              color={isWatched ? 'success' : 'primary'}
-              variant={isWatched ? 'filled' : 'outline'}
+              color={isWatched ? "success" : "primary"}
+              variant={isWatched ? "filled" : "outline"}
             />
           </div>
           <TimelineConnector />
@@ -56,7 +62,15 @@ const TimelineThing = ({ movie, watchedData, userUID }) => {
           variant="standard"
           onChange={(e) => setText(e.target.value)}
         />
-        <Button variant="outlined" onClick={handleDialog}>Submit</Button>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            handleDialog();
+            handleDataSet();
+          }}
+        >
+          Submit
+        </Button>
       </Dialog>
     </div>
   );
