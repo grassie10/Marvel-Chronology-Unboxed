@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import "../App.css";
 import { setData } from "../firebase";
-import { Dialog, DialogTitle, TextField, Button } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  TextField,
+  Button,
+  Typography,
+  Rating,
+} from "@mui/material";
 import {
   TimelineItem,
   TimelineSeparator,
@@ -15,6 +22,7 @@ const TimelineThing = ({ movie, watchedData, userUID, notesTaken }) => {
   const [isWatched, setIsWatched] = useState(watchedData[movie.key]);
   const [open, setOpen] = useState(false);
   const [text, setText] = useState(notesTaken[movie.key]);
+  const [rating, setRating] = useState(0);
 
   const toggleMovieWatched = () => {
     if (userUID !== "") {
@@ -52,8 +60,18 @@ const TimelineThing = ({ movie, watchedData, userUID, notesTaken }) => {
         </TimelineSeparator>
         <TimelineContent>{movie.name}</TimelineContent>
       </TimelineItem>
+
       <Dialog onClose={handleDialog} open={open}>
+        <Typography component="legend">Rating</Typography>
+        <Rating
+          name="simple-controlled"
+          value={rating}
+          onChange={(event, newValue) => {
+            setRating(newValue);
+          }}
+        />
         <DialogTitle>What are your thoughts on {movie.name}?</DialogTitle>
+
         <TextField
           id="standard-multiline-static"
           multiline
