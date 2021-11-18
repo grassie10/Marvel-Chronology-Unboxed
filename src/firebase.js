@@ -26,10 +26,15 @@ const database = getDatabase(firebase);
 
 // User auth functions
 export const signInWithGoogle = () => {
-  signInWithPopup(getAuth(firebase), new GoogleAuthProvider());
+  signInWithPopup(getAuth(firebase), new GoogleAuthProvider()).then((value => {
+    window.location.reload();
+  }));
 };
 
-const firebaseSignOut = () => signOut(getAuth(firebase));
+const firebaseSignOut = () => {
+  signOut(getAuth(firebase));
+  window.location.reload();
+}
 
 export { firebaseSignOut as signOut };
 
