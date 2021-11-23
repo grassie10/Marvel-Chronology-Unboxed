@@ -18,11 +18,17 @@ import {
   TimelineOppositeContent,
 } from "@mui/lab";
 
-const TimelineThing = ({ movie, watchedData, userUID, notesTaken }) => {
+const TimelineThing = ({
+  movie,
+  watchedData,
+  userUID,
+  notesTaken,
+  ratings,
+}) => {
   const [isWatched, setIsWatched] = useState(watchedData[movie.key]);
   const [open, setOpen] = useState(false);
   const [text, setText] = useState(notesTaken[movie.key]);
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(ratings[movie.key]);
 
   const toggleMovieWatched = () => {
     if (userUID !== "") {
@@ -39,6 +45,13 @@ const TimelineThing = ({ movie, watchedData, userUID, notesTaken }) => {
     if (userUID !== "") {
       setData(`users/${userUID}/notes/${movie.key}`, text);
     }
+  };
+
+  const handleRating = (value) => {
+    if (userUID !== "") {
+      setData(`users/${userUID}/ratings/${movie.key}`, value);
+    }
+    setRating(value);
   };
 
   return (
@@ -67,7 +80,8 @@ const TimelineThing = ({ movie, watchedData, userUID, notesTaken }) => {
           name="simple-controlled"
           value={rating}
           onChange={(event, newValue) => {
-            setRating(newValue);
+            console.log(newValue);
+            handleRating(newValue);
           }}
         />
         <DialogTitle>What are your thoughts on {movie.name}?</DialogTitle>

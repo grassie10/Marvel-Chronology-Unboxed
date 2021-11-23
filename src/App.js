@@ -1,25 +1,26 @@
-import React, { useState } from 'react';
-import './App.css';
-import { useData, setData, getUID, useUserState } from './firebase';
+import React, { useState } from "react";
+import "./App.css";
+import { useData, setData, getUID, useUserState } from "./firebase";
 
-import Timeline from '@mui/lab/Timeline';
-import TimelineThing from './components/TimelineThing';
-import NavBar from './components/NavBar';
+import Timeline from "@mui/lab/Timeline";
+import TimelineThing from "./components/TimelineThing";
+import NavBar from "./components/NavBar";
 
 function App() {
-  const [data, loading, error] = useData('/');
+  const [data, loading, error] = useData("/");
   const [user] = useUserState();
-  const [order, setOrder] = useState('release');
+  const [order, setOrder] = useState("release");
   var watchedData = {};
-  var userUID = '';
+  var userUID = "";
   var notesTaken = {};
-  var mappedData = {};
+  var ratings = {};
+
   if (loading)
     return (
       <h1
         style={{
-          textAlign: 'center',
-          marginTop: '50',
+          textAlign: "center",
+          marginTop: "50",
         }}
       >
         Loading...
@@ -34,25 +35,26 @@ function App() {
 
     // Get there watched data or set it to all false
     if (data.users[userUID]) {
-      notesTaken = data.users[userUID]['notes'];
-      watchedData = data.users[userUID]['watched'];
+      notesTaken = data.users[userUID]["notes"];
+      watchedData = data.users[userUID]["watched"];
+      ratings = data.users[userUID]["ratings"];
     } else {
-      data.movies.forEach(function (movie) {
+      data.movies.forEach((movie) => {
         watchedData[movie.key] = false;
+        notesTaken[movie.key] = "Enter thoughts here.";
+        ratings[movie.key] = 0;
       });
-      data.movies.forEach(function (movie) {
-        notesTaken[movie.key] = 'Enter thoughts here.';
-      });
+
       setData(`users/${userUID}/watched`, watchedData);
       setData(`users/${userUID}/notes`, notesTaken);
+      setData(`users/${userUID}/ratings`, ratings);
     }
   } else {
     // Set data to all false if no user
     data.movies.forEach(function (movie) {
       watchedData[movie.key] = false;
-    });
-    data.movies.forEach(function (movie) {
-      notesTaken[movie.key] = 'Enter thoughts here.';
+      notesTaken[movie.key] = "Enter thoughts here.";
+      ratings[movie.key] = 0;
     });
   }
 
@@ -61,25 +63,32 @@ function App() {
     orderedMovies[movie.order - 1] = movie;
   });
 
-  if (order === 'release') {
-    mappedData = data.movies;
-  } else {
-    mappedData = orderedMovies;
-  }
-
   return (
-    <div className='App'>
+    <div className="App">
       <NavBar order={order} setOrder={setOrder} />
-      <Timeline position='alternate'>
-        {mappedData.map((movie, index) => (
-          <TimelineThing
-            movie={movie}
-            watchedData={watchedData}
-            notesTaken={notesTaken}
-            userUID={userUID}
-            key={index}
-          />
-        ))}
+      <Timeline position="alternate">
+        {order === "release" &&
+          data.movies.map((movie, index) => (
+            <TimelineThing
+              movie={movie}
+              ratings={ratings}
+              watchedData={watchedData}
+              notesTaken={notesTaken}
+              userUID={userUID}
+              key={index}
+            />
+          ))}
+        {order === "chrono" &&
+          orderedMovies.map((movie, index) => (
+            <TimelineThing
+              ratings={ratings}
+              movie={movie}
+              watchedData={watchedData}
+              notesTaken={notesTaken}
+              userUID={userUID}
+              key={index}
+            />
+          ))}
       </Timeline>
     </div>
   );
