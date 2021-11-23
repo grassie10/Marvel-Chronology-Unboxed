@@ -4,27 +4,37 @@ import {
   Toolbar,
   Typography,
   Button,
-  IconButton,
+  FormGroup,
+  FormControlLabel,
+  Switch,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import { signInWithGoogle, signOut, useUserState } from '../firebase';
 
-const NavBar = () => {
+const NavBar = ({ order, setOrder }) => {
   const [user] = useUserState();
+
+  const handleChange = () => {
+    if (order === 'release') {
+      setOrder('chrono');
+    } else {
+      setOrder('release');
+    }
+  };
 
   return (
     <AppBar position='static' color='primary'>
       <Toolbar variant='dense'>
-        <IconButton
-          size='large'
-          edge='start'
-          color='inherit'
-          aria-label='menu'
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch onChange={handleChange} aria-label='login switch' />
+            }
+            label={order === 'release' ? 'Release Date' : 'Chronological'}
+          />
+        </FormGroup>
+
         <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
           MarvelChronologyUnboxed
         </Typography>

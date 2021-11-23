@@ -1,23 +1,25 @@
-import React from "react";
-import "./App.css";
-import { useData, setData, getUID, useUserState } from "./firebase";
+import React, { useState } from 'react';
+import './App.css';
+import { useData, setData, getUID, useUserState } from './firebase';
 
-import Timeline from "@mui/lab/Timeline";
-import TimelineThing from "./components/TimelineThing";
-import NavBar from "./components/NavBar";
+import Timeline from '@mui/lab/Timeline';
+import TimelineThing from './components/TimelineThing';
+import NavBar from './components/NavBar';
 
 function App() {
-  const [data, loading, error] = useData("/");
+  const [data, loading, error] = useData('/');
   const [user] = useUserState();
+  const [order, setOrder] = useState('release');
   var watchedData = {};
-  var userUID = "";
+  var userUID = '';
   var notesTaken = {};
+  var mappedData = {};
   if (loading)
     return (
       <h1
         style={{
-          textAlign: "center",
-          marginTop: "50",
+          textAlign: 'center',
+          marginTop: '50',
         }}
       >
         Loading...
@@ -32,14 +34,14 @@ function App() {
 
     // Get there watched data or set it to all false
     if (data.users[userUID]) {
-      notesTaken = data.users[userUID]["notes"];
-      watchedData = data.users[userUID]["watched"];
+      notesTaken = data.users[userUID]['notes'];
+      watchedData = data.users[userUID]['watched'];
     } else {
       data.movies.forEach(function (movie) {
         watchedData[movie.key] = false;
       });
       data.movies.forEach(function (movie) {
-        notesTaken[movie.key] = "Enter thoughts here.";
+        notesTaken[movie.key] = 'Enter thoughts here.';
       });
       setData(`users/${userUID}/watched`, watchedData);
       setData(`users/${userUID}/notes`, notesTaken);
@@ -50,17 +52,26 @@ function App() {
       watchedData[movie.key] = false;
     });
     data.movies.forEach(function (movie) {
-      notesTaken[movie.key] = "Enter thoughts here.";
+      notesTaken[movie.key] = 'Enter thoughts here.';
     });
   }
 
-  console.log(watchedData);
+  var orderedMovies = Array(data.movies.length);
+  data.movies.forEach(function (movie) {
+    orderedMovies[movie.order - 1] = movie;
+  });
+
+  if (order === 'release') {
+    mappedData = data.movies;
+  } else {
+    mappedData = orderedMovies;
+  }
 
   return (
-    <div className="App">
-      <NavBar />
-      <Timeline position="alternate">
-        {data.movies.map((movie, index) => (
+    <div className='App'>
+      <NavBar order={order} setOrder={setOrder} />
+      <Timeline position='alternate'>
+        {mappedData.map((movie, index) => (
           <TimelineThing
             movie={movie}
             watchedData={watchedData}
