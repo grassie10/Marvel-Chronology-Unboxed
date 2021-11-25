@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,43 +7,43 @@ import {
   FormGroup,
   FormControlLabel,
   Switch,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
-import { signInWithGoogle, signOut, useUserState } from '../firebase';
+import { signInWithGoogle, signOut, useUserState } from "../firebase";
 
 const NavBar = ({ order, setOrder }) => {
   const [user] = useUserState();
 
   const handleChange = () => {
-    if (order === 'release') {
-      setOrder('chrono');
+    if (order === "release") {
+      setOrder("chrono");
     } else {
-      setOrder('release');
+      setOrder("release");
     }
   };
 
   return (
-    <AppBar position='static' color='primary'>
-      <Toolbar variant='dense'>
+    <AppBar position="static" color="primary">
+      <Toolbar variant="dense">
         <FormGroup>
           <FormControlLabel
             control={
-              <Switch onChange={handleChange} aria-label='login switch' />
+              <Switch onChange={handleChange} aria-label="login switch" />
             }
-            label={order === 'release' ? 'Release Date' : 'Chronological'}
+            label={order === "release" ? "Release Date" : "Chronological"}
           />
         </FormGroup>
 
-        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           MarvelChronologyUnboxed
         </Typography>
         {user ? (
-          <Button color='inherit' onClick={signOut}>
+          <Button data-cy="logout" color="inherit" onClick={signOut}>
             Logout
           </Button>
         ) : (
-          <Button color='inherit' onClick={signInWithGoogle}>
+          <Button data-cy="login" color="inherit" onClick={signInWithGoogle}>
             Login
           </Button>
         )}

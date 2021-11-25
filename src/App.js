@@ -70,6 +70,7 @@ function App() {
         {order === "release" &&
           data.movies.map((movie, index) => (
             <TimelineThing
+              index={index}
               movie={movie}
               ratings={ratings}
               watchedData={watchedData}

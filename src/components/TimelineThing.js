@@ -24,6 +24,7 @@ const TimelineThing = ({
   userUID,
   notesTaken,
   ratings,
+  index,
 }) => {
   const [isWatched, setIsWatched] = useState(watchedData[movie.key]);
   const [open, setOpen] = useState(false);
@@ -56,10 +57,15 @@ const TimelineThing = ({
 
   return (
     <div>
-      <TimelineItem>
+      <TimelineItem index={index}>
         <div onClick={handleDialog}>
-          <TimelineOppositeContent>
-            <img height="100px" src={movie.url} alt="marvel"></img>
+          <TimelineOppositeContent data-cy="opposite-content">
+            <img
+              data-cy={`movie-image${index}`}
+              height="100px"
+              src={movie.url}
+              alt="marvel"
+            ></img>
           </TimelineOppositeContent>
         </div>
         <TimelineSeparator>
@@ -74,7 +80,7 @@ const TimelineThing = ({
         <TimelineContent>{movie.name}</TimelineContent>
       </TimelineItem>
 
-      <Dialog onClose={handleDialog} open={open}>
+      <Dialog data-cy="review-modal" onClose={handleDialog} open={open}>
         <Typography component="legend">Rating</Typography>
         <Rating
           name="simple-controlled"
@@ -87,6 +93,7 @@ const TimelineThing = ({
         <DialogTitle>What are your thoughts on {movie.name}?</DialogTitle>
 
         <TextField
+          data-cy="review-input"
           id="standard-multiline-static"
           multiline
           rows={4}
@@ -96,6 +103,7 @@ const TimelineThing = ({
         />
         <Button
           variant="outlined"
+          data-cy="submit"
           onClick={() => {
             handleDialog();
             handleDataSet();
