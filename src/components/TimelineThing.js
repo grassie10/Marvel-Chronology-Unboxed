@@ -24,6 +24,7 @@ const TimelineThing = ({
   userUID,
   notesTaken,
   ratings,
+  index,
 }) => {
   const [isWatched, setIsWatched] = useState(watchedData[movie.key]);
   const [open, setOpen] = useState(false);
@@ -65,7 +66,7 @@ const TimelineThing = ({
         <TimelineSeparator>
           <div onClick={toggleMovieWatched}>
             <TimelineDot
-              data-cy="timelinedot"
+              data-cy={`timelinedot${index}`}
               color={isWatched ? "success" : "primary"}
               variant={isWatched ? "filled" : "outline"}
             />

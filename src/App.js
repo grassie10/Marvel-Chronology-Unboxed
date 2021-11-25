@@ -76,11 +76,13 @@ function App() {
               notesTaken={notesTaken}
               userUID={userUID}
               key={index}
+              index={index}
             />
           ))}
         {order === "chrono" &&
           orderedMovies.map((movie, index) => (
             <TimelineThing
+              index={index}
               ratings={ratings}
               movie={movie}
               watchedData={watchedData}

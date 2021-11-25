@@ -1,16 +1,16 @@
 describe("Checking Watched Movies", () => {
   it("Checked Movies", () => {
     cy.visit("/");
-    cy.get("[data-cy=timelinedot]")
-      .click({ force: true, multiple: true })
-      .should("have.css", "color", "rgb (46, 125, 50)");
+    cy.get(`[data-cy=timelinedot${1}]`)
+      .click()
+      .should("have.css", "background-color", "rgb(46, 125, 50)");
   });
   it("Unchecked Movies", () => {
     cy.visit("/");
-    cy.get("[data-cy=timelinedot]").should(
+    cy.get(`[data-cy=timelinedot${1}]`).should(
       "have.css",
       "color",
-      "rgb(255, 255, 255)"
+      "rgb(0, 0, 0)"
     );
   });
 });
