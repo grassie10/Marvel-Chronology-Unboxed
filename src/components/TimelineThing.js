@@ -65,6 +65,7 @@ const TimelineThing = ({
         <TimelineSeparator>
           <div onClick={toggleMovieWatched}>
             <TimelineDot
+              data-cy="timelinedot"
               color={isWatched ? "success" : "primary"}
               variant={isWatched ? "filled" : "outline"}
             />
