@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import "./App.css";
 import { useData, setData, getUID, useUserState } from "./firebase";
-
+import {
+  Dialog,
+  DialogTitle,
+  TextField,
+  Button,
+  Typography,
+  Rating,
+} from "@mui/material";
 import Timeline from "@mui/lab/Timeline";
 import TimelineThing from "./components/TimelineThing";
 import NavBar from "./components/NavBar";
@@ -66,6 +73,9 @@ function App() {
   return (
     <div className="App">
       <NavBar order={order} setOrder={setOrder} />
+      <Typography style={{ margin: 10 }}>
+        Check the circles next to the movies you have seen!
+      </Typography>
       <Timeline position="alternate">
         {order === "release" &&
           data.movies.map((movie, index) => (
