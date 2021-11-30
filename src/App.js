@@ -12,11 +12,13 @@ import {
 import Timeline from "@mui/lab/Timeline";
 import TimelineThing from "./components/TimelineThing";
 import NavBar from "./components/NavBar";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   const [data, loading, error] = useData("/");
   const [user] = useUserState();
   const [order, setOrder] = useState("release");
+  const [character, setCharacter] = useState();
   var watchedData = {};
   var userUID = "";
   var notesTaken = {};
@@ -73,6 +75,13 @@ function App() {
   return (
     <div className="App">
       <NavBar order={order} setOrder={setOrder} />
+      {data !== undefined && (
+        <SearchBar
+          character={character}
+          setCharacter={setCharacter}
+          data={data.movies}
+        />
+      )}
       <Typography style={{ margin: 10 }}>
         Check the circles next to the movies you have seen!
       </Typography>
