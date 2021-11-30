@@ -75,13 +75,12 @@ function App() {
   return (
     <div className="App">
       <NavBar order={order} setOrder={setOrder} />
-      {data !== undefined && (
-        <SearchBar
-          character={character}
-          setCharacter={setCharacter}
-          data={data.movies}
-        />
-      )}
+      <SearchBar
+        character={character}
+        setCharacter={setCharacter}
+        data={data.movies}
+      />
+      )
       <Typography style={{ margin: 10 }}>
         Check the circles next to the movies you have seen!
       </Typography>

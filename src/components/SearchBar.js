@@ -1,9 +1,7 @@
-import { Movie } from "@mui/icons-material";
-import React, { useState } from "react";
-import "../App.css";
-import { setData } from "../firebase";
-import { Dropdown, FormControl } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from "react";
+import { Dropdown, FormControl } from "react-bootstrap";
+import "../App.css";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => {
   return (
@@ -48,7 +46,14 @@ const CustomMenu = React.forwardRef(
     );
   }
 );
+
 const SearchBar = ({ data, character, setCharacter }) => {
+  var characterList = data.flatMap((movie) => movie.characters);
+  characterList = characterList.filter((value, index, array) => {
+    return array.indexOf(value) === index;
+  });
+  characterList.sort();
+
   return (
     <Dropdown style={{ position: "inherit" }}>
       <div style={{ left: "0px", padding: "30px" }}>
@@ -56,32 +61,14 @@ const SearchBar = ({ data, character, setCharacter }) => {
           Select Character
         </Dropdown.Toggle>
         <Dropdown.Menu as={CustomMenu}>
-          {data.map(
-            (movie, index) => (
-              <Dropdown.Item
-                key={index}
-                //  onClick={(e) => setCharacter(e.target.value)}
-              >
-                {movie.characters[0]}
-              </Dropdown.Item>
-            )
-            // !Object.keys(character).includes(index.toString()) ? (
-            //   <Dropdown.Item
-            //     key={index}
-            //     onClick={(e) => setCharacter(e.target.value)}
-            //   >
-            //     {item.characters}
-            //   </Dropdown.Item>
-            // ) : (
-            //   <Dropdown.Item
-            //     key={index}
-            //     onClick={() => setFoods(handleSetFoods(index, item))}
-            //     disabled
-            //   >
-            //     {item.name}
-            //   </Dropdown.Item>
-            // )
-          )}
+          {characterList.map((character, index) => (
+            <Dropdown.Item
+              key={index}
+              //  onClick={(e) => setCharacter(e.target.value)}
+            >
+              {character}
+            </Dropdown.Item>
+          ))}
         </Dropdown.Menu>
         <button
           style={{ marginLeft: "10px" }}
