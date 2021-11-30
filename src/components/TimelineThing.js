@@ -59,7 +59,7 @@ const TimelineThing = ({
       <TimelineItem>
         <div onClick={handleDialog}>
           <TimelineOppositeContent>
-            <img height="100px" src={movie.url} alt="marvel"></img>
+            <img data-cy={`movie-image${index}`} height="100px" src={movie.url} alt="marvel"></img>
           </TimelineOppositeContent>
         </div>
         <TimelineSeparator>
@@ -74,9 +74,10 @@ const TimelineThing = ({
         <TimelineContent>{movie.name}</TimelineContent>
       </TimelineItem>
 
-      <Dialog onClose={handleDialog} open={open}>
+      <Dialog data-cy="review-modal" onClose={handleDialog} open={open}>
         <Typography component="legend">Rating</Typography>
         <Rating
+          data-cy="review-rate"
           name="simple-controlled"
           value={rating}
           onChange={(event, newValue) => {
