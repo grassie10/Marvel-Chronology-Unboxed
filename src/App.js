@@ -18,7 +18,7 @@ function App() {
   const [data, loading, error] = useData("/");
   const [user] = useUserState();
   const [order, setOrder] = useState("release");
-  const [character, setCharacter] = useState();
+  const [character, setCharacter] = useState("");
   var watchedData = {};
   var userUID = "";
   var notesTaken = {};
@@ -80,33 +80,42 @@ function App() {
         setCharacter={setCharacter}
         data={data.movies}
       />
-      )
       <Typography style={{ margin: 10 }}>
         Check the circles next to the movies you have seen!
       </Typography>
       <Timeline position="alternate">
         {order === "release" &&
-          data.movies.map((movie, index) => (
-            <TimelineThing
-              movie={movie}
-              ratings={ratings}
-              watchedData={watchedData}
-              notesTaken={notesTaken}
-              userUID={userUID}
-              key={index}
-            />
-          ))}
+          data.movies.map((movie, index) => {
+            if (character === "" || movie.characters.includes(character)) {
+              return (
+                <TimelineThing
+                  movie={movie}
+                  ratings={ratings}
+                  watchedData={watchedData}
+                  notesTaken={notesTaken}
+                  userUID={userUID}
+                  key={index}
+                />
+              )
+            }
+          })
+        }
         {order === "chrono" &&
-          orderedMovies.map((movie, index) => (
-            <TimelineThing
-              ratings={ratings}
-              movie={movie}
-              watchedData={watchedData}
-              notesTaken={notesTaken}
-              userUID={userUID}
-              key={index}
-            />
-          ))}
+          orderedMovies.map((movie, index) => {
+            if (character === "" || movie.characters.includes(character)) {
+              return (
+                <TimelineThing
+                  movie={movie}
+                  ratings={ratings}
+                  watchedData={watchedData}
+                  notesTaken={notesTaken}
+                  userUID={userUID}
+                  key={index}
+                />
+              )
+            }
+          })
+        }
       </Timeline>
     </div>
   );

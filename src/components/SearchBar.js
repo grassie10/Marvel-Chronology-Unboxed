@@ -58,13 +58,14 @@ const SearchBar = ({ data, character, setCharacter }) => {
     <Dropdown style={{ position: "inherit" }}>
       <div style={{ left: "0px", padding: "30px" }}>
         <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-          Select Character
+          {character === "" ? "Select Character" : character}
         </Dropdown.Toggle>
         <Dropdown.Menu as={CustomMenu}>
           {characterList.map((character, index) => (
             <Dropdown.Item
               key={index}
-              //  onClick={(e) => setCharacter(e.target.value)}
+              onClick={() => {
+                setCharacter(character)}}
             >
               {character}
             </Dropdown.Item>
@@ -76,7 +77,7 @@ const SearchBar = ({ data, character, setCharacter }) => {
           className="btn btn-outline-secondary"
           data-testid="clear-button"
           onClick={() => {
-            setCharacter({});
+            setCharacter("");
           }}
         >
           clear
