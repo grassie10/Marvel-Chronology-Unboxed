@@ -110,7 +110,7 @@ const TimelineThing = ({
             handleRating(newValue);
           }}
         />
-        <a href={movie.imdb}>Visit IMDB page for this movie!</a>
+        <a href={movie.imdb} target="_blank">Visit IMDB page for this movie!</a>
 
         <DialogTitle>What are your thoughts on {movie.name}?</DialogTitle>
         <TextField
