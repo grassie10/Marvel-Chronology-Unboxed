@@ -18,6 +18,9 @@ import {
   TimelineOppositeContent,
 } from "@mui/lab";
 
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+
 const TimelineThing = ({
   movie,
   watchedData,
@@ -35,6 +38,8 @@ const TimelineThing = ({
       setData(`users/${userUID}/watched/${movie.key}`, !isWatched);
     }
     setIsWatched(!isWatched);
+    var blinking = document.getElementById("myDIV");
+    blinking.style.display = "none";
   };
 
   const handleDialog = () => {
@@ -59,19 +64,40 @@ const TimelineThing = ({
       <TimelineItem>
         <div onClick={handleDialog}>
           <TimelineOppositeContent>
-            <img height="100px" src={movie.url} alt="marvel"></img>
+            <div className="imageBox">
+              <img
+                height="120px"
+                width="80px"
+                src={movie.url}
+                alt="marvel"
+              ></img>
+            </div>
           </TimelineOppositeContent>
         </div>
         <TimelineSeparator>
           <div onClick={toggleMovieWatched}>
-            <TimelineDot
-              color={isWatched ? "success" : "primary"}
-              variant={isWatched ? "filled" : "outline"}
-            />
+            <TimelineDot>
+              {isWatched ? (
+                <CheckCircleIcon
+                  fontSize="small"
+                  color={isWatched ? "success" : "primary"}
+                  variant={isWatched ? "filled" : "outline"}
+                />
+              ) : (
+                <RadioButtonUncheckedIcon fontSize="small" />
+              )}
+            </TimelineDot>
           </div>
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent>{movie.name}</TimelineContent>
+        <TimelineContent sx={{ py: "12px", px: 2 }}>
+          <Typography variant="h6" component="span">
+            <div className="movietitle">{movie.name}</div>
+          </Typography>
+          <Typography>
+            <div className="movietitle">{movie.year}</div>
+          </Typography>
+        </TimelineContent>
       </TimelineItem>
 
       <Dialog onClose={handleDialog} open={open}>
@@ -84,7 +110,7 @@ const TimelineThing = ({
             handleRating(newValue);
           }}
         />
-        <a href={movie.url}>Visit IMDB page for this movie!</a>
+        <a href={movie.imdb}>Visit IMDB page for this movie!</a>
 
         <DialogTitle>What are your thoughts on {movie.name}?</DialogTitle>
         <TextField

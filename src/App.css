@@ -28,6 +28,33 @@
   color: #61dafb;
 }
 
+.imageBox
+{
+  width: 100px;
+  padding: 10px;
+}
+.imageBox:hover
+{
+  -moz-box-shadow: 0 0 10px #ccc;
+  -webkit-box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc;
+}
+
+.movietitle{
+  font-family: 'Marvel', sans-serif;
+}
+.blinking{
+	animation:blinkingText 1s infinite;
+  padding-left: 130px;
+  font-size: xx-large;
+  display: block;
+}
+@keyframes blinkingText{
+	0%{		color:#328ba8;}
+	50%{	color: transparent;	}
+	100%{	color:#328ba8;}
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

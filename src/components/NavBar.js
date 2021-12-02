@@ -8,7 +8,6 @@ import {
   FormControlLabel,
   Switch,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 
 import { signInWithGoogle, signOut, useUserState } from '../firebase';
 
