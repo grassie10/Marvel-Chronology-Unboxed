@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# CS 397 Rapid Prototyping: Marvel Chronology Unboxed (Unboxed)
+
+Live site can be viewed here: [https://marvel-chronology-unboxed.web.app/](https://marvel-chronology-unboxed.web.app/)
+
+A movie journal web app where users can check off MCU movies as they are watched in chronological or release date order, save their ratings and thoughts on each movie, and filter MCU movies by character. Created with React, Material UI, and Firebase.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
